@@ -52,7 +52,7 @@ def biggest(rect_list):
     Args: rect_list: list of rects
     Returns: max_name: rect name
      '''
-    sizes = (rect_list[:,3]*rect_list[:,4]).astype(float)
+    sizes = rect_list[:,3].astype(float) * rect_list[:,4].astype(float)
     max_size = np.amax(sizes)
     max_index=np.where(sizes==max_size)[0][0]
     max_name=rect_list[max_index,0]
