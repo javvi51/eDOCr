@@ -52,8 +52,9 @@ def biggest(rect_list):
     Args: rect_list: list of rects
     Returns: max_name: rect name
      '''
-    max_size = np.amax(rect_list[:,5].astype(float))
-    max_index=np.where(rect_list[:,5].astype(float)==max_size)[0][0]
+    sizes = (rect_list[:,3]*rect_list[:,4]).astype(float)
+    max_size = np.amax(sizes)
+    max_index=np.where(sizes==max_size)[0][0]
     max_name=rect_list[max_index,0]
     return max_name
 
@@ -167,9 +168,8 @@ def findrect(img):
                 crop_img=img[y:y+h,x:x+w] #Crop the rectangle
                 cv2.putText(img_boxes, 'rect_'+str(r), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 127, 83), 2) #Add rectangle tag
                 img_boxes = cv2.drawContours(img_boxes, [cnt], -1, (255, 127, 83), 2) #Plot rectangle contourn in green
-                size=w*h
                 rect_list.append(['rect_'+str(r),x,y,w,h]) #Get a list of rectangles
-                class_list.append(rect('rect_'+str(r),x,y,w,h,size,crop_img,'green')) #Get a list with the rect class
+                class_list.append(rect('rect_'+str(r),x,y,w,h,crop_img,'green')) #Get a list with the rect class
                 r=r+1
     
     print('number of rectangles:',len(rect_list))
